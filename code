@@ -1,0 +1,34 @@
+import random
+
+def generate_nicknames(fname, lname):
+    nicknames = []
+    nicknames.append(fname[:3] + lname[-3:])
+    nicknames.append(lname[:3] + fname[-3:])
+    nicknames.append(fname + lname)
+    nicknames.append(fname.capitalize() + "_" + lname[::-1].capitalize())
+    nicknames.append("".join(random.sample(fname + lname, len(fname + lname))))
+    nicknames.append(fname[:2] + str(random.randint(10, 99)) + lname[-2:])
+    return nicknames
+
+def main():
+    fname = input("Enter your first name: ").strip()
+    lname = input("Enter your last name: ").strip()
+    
+    if not fname or not lname:
+        print("Invalid input.")
+        return
+
+    print("\nGenerated Nicknames:")
+    nicknames = generate_nicknames(fname, lname)
+    for i, nick in enumerate(nicknames, start=1):
+        print(f"{i}. {nick}")
+
+    save = input("\nSave nicknames to file? (y/n): ").lower()
+    if save == 'y':
+        with open("nicknames.txt", "w") as f:
+            for nick in nicknames:
+                f.write(nick + "\n")
+        print("Nicknames saved to nicknames.txt")
+
+if __name__ == "__main__":
+    main()
